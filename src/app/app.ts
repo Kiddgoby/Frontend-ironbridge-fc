@@ -9,31 +9,34 @@ import { NewsService } from './services/news.service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
-  private readonly playerService = inject(PlayerService);
-  private readonly newsService = inject(NewsService);
-
+export class App {
   protected readonly title = signal('IRONBRIDGE FC');
-
-  ngOnInit(): void {
-    console.log('--- Probando conexión con el Backend ---');
-
-    this.playerService.getPlayers().subscribe({
-      next: (players) => {
-        console.log('✅ Jugadores recibidos:', players);
-      },
-      error: (err) => {
-        console.error('❌ Error cargando jugadores:', err);
-      }
-    });
-
-    this.newsService.getAllNews().subscribe({
-      next: (news) => {
-        console.log('✅ Noticias recibidas:', news);
-      },
-      error: (err) => {
-        console.error('❌ Error cargando noticias:', err);
-      }
-    });
-  }
 }
+// export class App implements OnInit {
+//   private readonly playerService = inject(PlayerService);
+//   private readonly newsService = inject(NewsService);
+
+//   protected readonly title = signal('IRONBRIDGE FC');
+
+//   ngOnInit(): void {
+//     console.log('--- Probando conexión con el Backend ---');
+
+//     this.playerService.getPlayers().subscribe({
+//       next: (players) => {
+//         console.log('✅ Jugadores recibidos:', players);
+//       },
+//       error: (err) => {
+//         console.error('❌ Error cargando jugadores:', err);
+//       }
+//     });
+
+//     this.newsService.getAllNews().subscribe({
+//       next: (news) => {
+//         console.log('✅ Noticias recibidas:', news);
+//       },
+//       error: (err) => {
+//         console.error('❌ Error cargando noticias:', err);
+//       }
+//     });
+//   }
+// }

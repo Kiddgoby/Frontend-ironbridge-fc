@@ -1,0 +1,51 @@
+<div class="register-container">
+  <div class="form-section">
+    <div class="header-content">
+      <h1 class="main-title">Bienvenido de nuevo a <br><span class="highlight">ironbridge FC</span></h1>
+      <p class="subtitle">accede a tu cuenta</p>
+    </div>
+
+    <form class="registration-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="email">Gmail</label>
+        <input type="email" id="email" placeholder="tu@email.com" formControlName="email">
+      </div>
+
+      <div class="input-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" formControlName="password">
+      </div>
+
+      <div class="checkbox-group">
+        <label class="checkbox-container">
+          <input type="checkbox" formControlName="remember">
+          <span class="checkmark"></span>
+          Recordar mi sesión
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="loginForm.invalid">INICIAR SESIÓN</button>
+      
+      <div class="form-footer">
+        <p>¿Aún no eres de la familia? <a routerLink="/register" class="link">Únete ahora</a></p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Welcome Popup -->
+  <div class="welcome-overlay" *ngIf="showWelcome()">
+    <div class="welcome-card">
+      <div class="shield-mini">
+        <img src="assets/img/ironbridgeEscudo.png" alt="Escudo">
+      </div>
+      <h2>¡BIENVENIDO, {{ userName() }}!</h2>
+      <p>Es un placer tenerte de vuelta en el Ironbridge FC.</p>
+      <div class="loader-line"></div>
+    </div>
+  </div>
+
+  <div class="visual-section">
+    <div class="background-overlay"></div>
+    <img src="assets/img/ironbridgeEscudo.png" alt="Ironbridge FC Escudo" class="shield-logo">
+  </div>
+</div>

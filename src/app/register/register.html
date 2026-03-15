@@ -1,0 +1,85 @@
+<div class="register-container">
+  <div class="form-section">
+    <div class="header-content">
+      <h1 class="main-title">Unete al <span class="highlight">ironbridge FC</span></h1>
+      <p class="subtitle">bienvenido a la familia, forjemos un futuro juntos!!</p>
+    </div>
+
+    <form class="registration-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <div class="row">
+          <div class="col">
+            <div class="input-group">
+              <label for="name">Nombre</label>
+              <input type="text" id="name" placeholder="Tu nombre" formControlName="name">
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <label for="lastname">Apellido</label>
+              <input type="text" id="lastname" placeholder="Tu apellido" formControlName="lastname">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="email">Gmail</label>
+        <input type="email" id="email" placeholder="tu@email.com" formControlName="email">
+      </div>
+
+      <div class="row">
+        <div class="input-group col">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="ConTraseñA S3GurA" formControlName="password">
+        </div>
+
+        <div class="input-group col">
+          <label for="confirmPassword">Verificar contraseña</label>
+          <input type="password" id="confirmPassword" placeholder="ConTraseñA S3GurA" formControlName="confirmPassword">
+        </div>
+      </div>
+
+      <div class="inline-checkboxes">
+        <div class="checkbox-group">
+          <label class="checkbox-container">
+            <input type="checkbox" formControlName="acceptTerms">
+            <span class="checkmark"></span>
+            Acepto las condiciones de uso y la politica de privacidad
+          </label>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-container">
+            <input type="checkbox" formControlName="subscribeNews">
+            <span class="checkmark"></span>
+            Deseo recibir noticias sobre el club y sus eventos
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="registerForm.invalid">REGISTRARSE</button>
+      
+      <div class="form-footer">
+        <p>¿Ya tienes cuenta? <a routerLink="/login" class="link">Inicia sesión</a></p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Welcome Popup -->
+  <div class="welcome-overlay" *ngIf="showWelcome()">
+    <div class="welcome-card">
+      <div class="shield-mini">
+        <img src="assets/img/ironbridgeEscudo.png" alt="Escudo">
+      </div>
+      <h2>¡BIENVENIDO, {{ userName() }}!</h2>
+      <p>Ya eres parte de la familia del Ironbridge FC.</p>
+      <div class="loader-line"></div>
+    </div>
+  </div>
+
+  <div class="visual-section">
+    <div class="background-overlay"></div>
+    <img src="assets/img/ironbridgeEscudo.png" alt="Ironbridge FC Escudo" class="shield-logo">
+  </div>
+</div>
