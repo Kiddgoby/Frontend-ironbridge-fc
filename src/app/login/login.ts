@@ -35,7 +35,7 @@ export class Login {
           
           setTimeout(() => {
             this.showWelcome.set(false);
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
           }, 3000);
         },
         error: (err) => {
