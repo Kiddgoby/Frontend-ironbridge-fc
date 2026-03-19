@@ -52,6 +52,7 @@
 
 .nav-link:hover, .nav-link.active {
   opacity: 1;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .nav-link.active::after {
@@ -62,5 +63,5 @@
   width: 100%;
   height: 2px;
   background: #fff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
