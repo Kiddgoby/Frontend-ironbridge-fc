@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<main class="home-container">
+  <section class="hero-section">
+    <div class="hero-bg">
+      <img src="assets/img/estadio1.png" alt="IRONBRIDGE Stadium" class="bg-img">
+      <div class="hero-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <h1 class="club-name">IRONBRIDGE FC</h1>
+      <p class="hero-slogan">LEALTAD & TRADICIÓN</p>
+      <div class="hero-cta">
+        <button class="btn-primary">EXPLORAR CLUB</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="news-section">
+    <div class="section-header">
+      <h2 class="section-title">NOTICIAS</h2>
+      <div class="title-underline"></div>
+    </div>
+
+    <div class="news-grid">
+      @for (item of newsList(); track item.id) {
+      <article class="news-card">
+        <div class="news-img-container">
+          <img [src]="item.imageUrl || 'assets/img/estadio1.png'" [alt]="item.title" class="news-img">
+          <div class="news-date">{{ item.publishedAt | date:'dd MMM' }}</div>
+        </div>
+        <div class="news-info">
+          <h3 class="news-title">{{ item.title }}</h3>
+          <p class="news-excerpt">{{ item.content | slice:0:100 }}...</p>
+        </div>
+      </article>
+      }
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
