@@ -1,21 +1,340 @@
+/* ===== IMPORTS ===== */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
 
-/* You can add global styles to this file, and also import other style files */
+/* ===== CSS VARIABLES (COLORS) ===== */
+:root {
+  /* Primary Colors */
+  --color-primary: #ffd700;
+  --color-primary-dark: #ff6b35;
+  --color-secondary: #fff;
+  
+  /* Background Colors */
+  --bg-dark: #050505;
+  --bg-dark-light: #1a1a1a;
+  --bg-gradient: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-tertiary: rgba(255, 255, 255, 0.6);
+  --text-dark: #000000;
+  
+  /* Border Colors */
+  --border-primary: rgba(255, 215, 0, 0.2);
+  --border-primary-light: rgba(255, 215, 0, 0.3);
+  --border-primary-medium: rgba(255, 215, 0, 0.5);
+  --border-primary-hover: rgba(255, 215, 0, 0.6);
+  
+  /* Status Colors */
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-error: #f44336;
+  --color-info: #2196f3;
+  
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(255, 215, 0, 0.15);
+  --shadow-heavy: rgba(0, 0, 0, 0.5);
+}
 
+/* ===== TYPOGRAPHY ===== */
+:root {
+  /* Font Families */
+  --font-primary: 'Bebas Neue', cursive;
+  --font-secondary: 'Outfit', sans-serif;
+  
+  /* Font Sizes */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.85rem;
+  --fs-base: 0.9rem;
+  --fs-lg: 1rem;
+  --fs-xl: 1.2rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 2rem;
+  --fs-4xl: 2.5rem;
+  --fs-5xl: 3rem;
+  --fs-6xl: 4rem;
+  --fs-7xl: 5rem;
+  
+  /* Font Weights */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --fw-black: 900;
+  
+  /* Line Heights */
+  --lh-tight: 0.8;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.6;
+}
+
+/* ===== SPACING ===== */
+:root {
+  --sp-xs: 0.25rem;
+  --sp-sm: 0.5rem;
+  --sp-md: 1rem;
+  --sp-lg: 1.5rem;
+  --sp-xl: 2rem;
+  --sp-2xl: 2.5rem;
+  --sp-3xl: 3rem;
+  --sp-4xl: 4rem;
+}
+
+/* ===== BORDER RADIUS ===== */
+:root {
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 15px;
+}
+
+/* ===== TRANSITIONS ===== */
+:root {
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-slowest: 1s ease;
+}
+
+/* ===== RESET & BASE STYLES ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body, html {
+html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body {
+  font-family: var(--font-secondary);
+  font-size: var(--fs-lg);
+  color: var(--text-primary);
+  background: var(--bg-gradient);
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
+}
+
+/* ===== TYPOGRAPHY BASE STYLES ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: -1px;
+}
+
+h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+}
+
+p {
+  line-height: var(--lh-relaxed);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* ===== COMMON COMPONENTS ===== */
+
+/* Buttons */
+.btn-primary {
+  background: transparent;
+  border: 1px solid var(--border-primary-light);
+  color: var(--text-primary);
+  padding: var(--sp-md) var(--sp-xl);
+  font-family: var(--font-secondary);
+  font-size: var(--fs-base);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-normal) cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background: var(--color-secondary);
+  color: var(--text-dark);
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.btn-secondary {
+  padding: var(--sp-md) var(--sp-lg);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--text-dark);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px var(--shadow-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px var(--shadow-medium);
+}
+
+.btn-secondary:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: var(--sp-sm) var(--sp-md);
+  border-radius: 20px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.5px;
+}
+
+.badge-primary {
+  background: var(--color-primary);
+  color: var(--text-dark);
+}
+
+.badge-success {
+  background: var(--color-success);
+  color: var(--text-primary);
+}
+
+.badge-warning {
+  background: var(--color-warning);
+  color: var(--text-dark);
+}
+
+.badge-error {
+  background: var(--color-error);
+  color: var(--text-primary);
+}
+
+/* Title Underline */
+.title-underline {
+  height: 3px;
+  width: 80px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--sp-xl);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--sp-3xl);
+}
+
+.section-header h2 {
+  color: var(--text-primary);
+  margin-bottom: var(--sp-lg);
+  text-transform: uppercase;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
+@media (max-width: 1024px) {
+  :root {
+    --fs-6xl: 3rem;
+    --fs-5xl: 2.5rem;
+    --fs-4xl: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --fs-6xl: 2.5rem;
+    --fs-5xl: 2rem;
+    --fs-4xl: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --sp-xl: 1.5rem;
+    --sp-lg: 1rem;
+    --fs-6xl: 2rem;
+    --fs-5xl: 1.5rem;
+    --fs-4xl: 1.2rem;
+  }
 }

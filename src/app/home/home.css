@@ -1,7 +1,7 @@
 .home-container {
   width: 100%;
   min-height: 100vh;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+  background: var(--bg-gradient);
 }
 
 .hero-section {
@@ -29,7 +29,7 @@
   object-fit: cover;
   transform: scale(1.1);
   filter: brightness(0.4) contrast(1.2);
-  transition: transform 10s ease;
+  transition: transform var(--transition-slowest);
 }
 
 .hero-section:hover .bg-img {
@@ -49,27 +49,27 @@
   position: relative;
   z-index: 10;
   text-align: center;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .club-name {
-  font-family: 'Bebas Neue', cursive;
+  font-family: var(--font-primary);
   font-size: clamp(4rem, 15vw, 12rem);
-  line-height: 0.8;
-  margin-bottom: 20px;
+  line-height: var(--lh-tight);
+  margin-bottom: var(--sp-xl);
   letter-spacing: -2px;
-  color: #fff;
+  color: var(--text-primary);
   text-shadow: 0 0 40px rgba(255, 255, 255, 0.2), 0 0 80px rgba(255, 0, 0, 0.1);
   animation: slideUp 1.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .hero-slogan {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.2rem;
+  font-family: var(--font-secondary);
+  font-size: var(--fs-xl);
   letter-spacing: 8px;
   opacity: 0.6;
   text-transform: uppercase;
-  margin-bottom: 40px;
+  margin-bottom: var(--sp-3xl);
   animation: fadeIn 2s ease 0.5s both;
 }
 
@@ -80,10 +80,10 @@
 .btn-primary {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  padding: 15px 40px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
+  color: var(--text-primary);
+  padding: var(--sp-md) var(--sp-xl);
+  font-family: var(--font-secondary);
+  font-size: var(--fs-base);
   letter-spacing: 4px;
   text-transform: uppercase;
   cursor: pointer;
@@ -93,9 +93,9 @@
 }
 
 .btn-primary:hover {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
+  background: var(--text-primary);
+  color: var(--text-dark);
+  border-color: var(--text-primary);
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
 }
 
@@ -111,7 +111,7 @@
 
 /* News Section Styles */
 .news-section {
-  padding: 100px 40px;
+  padding: var(--sp-4xl) var(--sp-xl);
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
@@ -119,15 +119,15 @@
 }
 
 .section-header {
-  margin-bottom: 60px;
+  margin-bottom: var(--sp-4xl);
 }
 
 .section-title {
-  font-family: 'Bebas Neue', cursive;
-  font-size: 3.5rem;
+  font-family: var(--font-primary);
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
   letter-spacing: 4px;
-  color: #fff;
-  margin-bottom: 10px;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-lg);
 }
 
 .title-underline {
@@ -140,7 +140,7 @@
 .news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 40px;
+  gap: var(--sp-xl);
 }
 
 .news-card {
