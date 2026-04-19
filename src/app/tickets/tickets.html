@@ -1,0 +1,190 @@
+<app-header></app-header>
+
+<main class="tickets-container">
+  <!-- Hero Section -->
+  <section class="tickets-hero">
+    <div class="hero-bg">
+      <img src="assets/img/estadio1.png" alt="IRONBRIDGE Stadium" class="bg-img">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1>ENTRADAS</h1>
+      <p class="hero-slogan">Apoya al IRONBRIDGE FC</p>
+    </div>
+  </section>
+
+  <!-- Team Selection -->
+  <section class="team-selector">
+    <div class="selector-container">
+      <button 
+        class="team-btn" 
+        [class.active]="selectedTeam() === 'primer-equipo'"
+        (click)="selectTeam('primer-equipo')">
+        <span class="team-icon"><span></span></span>
+        <span>Primer Equipo</span>
+        <span class="team-description">4ª División</span>
+      </button>
+
+      <button 
+        class="team-btn" 
+        [class.active]="selectedTeam() === 'filial'"
+        (click)="selectTeam('filial')">
+        <span class="team-icon"></span>
+        <span>Filial</span>
+        <span class="team-description">Futuro del Club</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Tickets Grid -->
+  <section class="tickets-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>
+          @if (selectedTeam() === 'primer-equipo') {
+            Entradas - Primer Equipo
+          } @else {
+            Entradas - Filial
+          }
+        </h2>
+        <div class="title-underline"></div>
+      </div>
+
+      <div class="tickets-grid">
+        @for (ticket of getVisibleTickets(); track ticket.id) {
+          <div class="ticket-card" [class.low-stock]="getAvailabilityStatus(ticket) === 'low'">
+            <!-- Image Container -->
+            <div class="ticket-image-container">
+              <img 
+                [src]="ticket.image" 
+                [alt]="ticket.name"
+                class="ticket-image">
+              <div class="ticket-type-badge">
+                @if (selectedTeam() === 'primer-equipo') {
+                  @if (ticket.id === 3 || ticket.id === 4) {
+                    <span class="badge badge-special">PROMOCIÓN</span>
+                  }
+                } @else {
+                  @if (ticket.id === 6) {
+                    <span class="badge badge-special">PROMOCIÓN</span>
+                  }
+                }
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="ticket-content">
+              <h3 class="ticket-name">{{ ticket.name }}</h3>
+              <p class="ticket-description">{{ ticket.description }}</p>
+
+              <!-- Price and Button -->
+              <div class="ticket-footer">
+                <div class="price">
+                  <span class="currency">€</span>
+                  <span class="amount">{{ ticket.price }}</span>
+                </div>
+                <button 
+                  class="btn-buy"
+                  [disabled]="ticket.available === 0"
+                  (click)="buyTicket(ticket)">
+                  @if (ticket.available > 0) {
+                    COMPRAR
+                  } @else {
+                    AGOTADO
+                  }
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- No Tickets Message -->
+      @if (getVisibleTickets().length === 0) {
+        <div class="no-tickets">
+          <p>No hay entradas disponibles en este momento.</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Activities Section -->
+  <section class="activities-section">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>Actividades</h2>
+        <div class="title-underline"></div>
+      </div>
+
+      <div class="activities-grid">
+        @for (activity of activities; track activity.id) {
+          <div class="activity-card" [class.low-stock]="getAvailabilityStatus(activity) === 'low'">
+            <!-- Image Container -->
+            <div class="activity-image-container">
+              <img 
+                [src]="activity.image" 
+                [alt]="activity.name"
+                class="activity-image">
+            </div>
+
+            <!-- Content -->
+            <div class="activity-content">
+              <h3 class="activity-name">{{ activity.name }}</h3>
+              <p class="activity-description">{{ activity.description }}</p>
+
+              <!-- Price and Button -->
+              <div class="activity-footer">
+                <div class="price">
+                  <span class="currency">€</span>
+                  <span class="amount">{{ activity.price }}</span>
+                </div>
+                <button 
+                  class="btn-buy"
+                  [disabled]="activity.available === 0"
+                  (click)="buyTicket(activity)">
+                  @if (activity.available > 0) {
+                    COMPRAR
+                  } @else {
+                    AGOTADO
+                  }
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Info Section -->
+  <section class="tickets-info">
+    <div class="info-container">
+      <h2>Información sobre las Entradas</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-icon"></div>
+          <h3>Ubicación</h3>
+          <p>Presenta tu entrada en la entrada principal del estadio como mínimo 30 minutos antes del partido.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"></div>
+          <h3>Política de Devoluciones</h3>
+          <p>Las entradas pueden ser devueltas hasta 7 días antes del evento con reembolso completo.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"></div>
+          <h3>Métodos de Pago</h3>
+          <p>Aceptamos tarjetas de crédito, transferencia bancaria y pagos digitales.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"></div>
+          <h3>Descuentos Especiales</h3>
+          <p>Menores de 12 años: 50% descuento. Jubilados: 30% descuento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<app-footer></app-footer>
