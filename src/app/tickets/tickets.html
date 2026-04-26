@@ -51,23 +51,21 @@
       </div>
 
       <div class="tickets-grid">
-        @for (ticket of getVisibleTickets(); track ticket.id) {
-          <div class="ticket-card" [class.low-stock]="getAvailabilityStatus(ticket) === 'low'">
+        @for (ticket of visibleTickets(); track ticket.id) {
+          <div class="ticket-card" [class.low-stock]="getTicketStatus(ticket.id) === 'low'">
             <!-- Image Container -->
             <div class="ticket-image-container">
               <img 
                 [src]="ticket.image" 
                 [alt]="ticket.name"
-                class="ticket-image">
+                class="ticket-image"
+                loading="lazy"
+                width="400"
+                height="250"
+              >
               <div class="ticket-type-badge">
-                @if (selectedTeam() === 'primer-equipo') {
-                  @if (ticket.id === 3 || ticket.id === 4) {
-                    <span class="badge badge-special">PROMOCIÓN</span>
-                  }
-                } @else {
-                  @if (ticket.id === 6) {
-                    <span class="badge badge-special">PROMOCIÓN</span>
-                  }
+                @if ((selectedTeam() === 'primer-equipo' && (ticket.id === 3 || ticket.id === 4)) || (selectedTeam() === 'filial' && ticket.id === 6)) {
+                  <span class="badge badge-special">PROMOCIÓN</span>
                 }
               </div>
             </div>
@@ -100,7 +98,7 @@
       </div>
 
       <!-- No Tickets Message -->
-      @if (getVisibleTickets().length === 0) {
+      @if (visibleTickets().length === 0) {
         <div class="no-tickets">
           <p>No hay entradas disponibles en este momento.</p>
         </div>
@@ -117,14 +115,18 @@
       </div>
 
       <div class="activities-grid">
-        @for (activity of activities; track activity.id) {
-          <div class="activity-card" [class.low-stock]="getAvailabilityStatus(activity) === 'low'">
+        @for (activity of activities(); track activity.id) {
+          <div class="activity-card" [class.low-stock]="getActivityStatus(activity.id) === 'low'">
             <!-- Image Container -->
             <div class="activity-image-container">
               <img 
                 [src]="activity.image" 
                 [alt]="activity.name"
-                class="activity-image">
+                class="activity-image"
+                loading="lazy"
+                width="400"
+                height="250"
+              >
             </div>
 
             <!-- Content -->

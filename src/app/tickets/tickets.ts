@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
@@ -29,13 +29,36 @@ interface Activity {
   imports: [Header, Footer, CommonModule],
   templateUrl: './tickets.html',
   styleUrl: './tickets.css',
-  
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tickets {
   selectedTeam = signal<'primer-equipo' | 'filial'>('primer-equipo');
-  showActivities = signal<boolean>(false);
+  
+  visibleTickets = computed(()=>
+    this.selectedTeam() === 'primer-equipo' 
+    ? this.primerEquipoTickets() 
+    : this.filialTickets()
+  );
 
-  primerEquipoTickets: Ticket[] = [
+  // Memoized availability statuses
+  ticketStatuses = computed(() => {
+    const tickets = this.visibleTickets();
+    return new Map(tickets.map(ticket => [
+      ticket.id,
+      this.getAvailabilityStatus(ticket)
+    ]));
+  });
+
+  activityStatuses = computed(() => {
+    const acts = this.activities();
+    return new Map(acts.map(activity => [
+      activity.id,
+      this.getAvailabilityStatus(activity)
+    ]));
+  });
+
+
+  primerEquipoTickets = signal<Ticket[]>([
     {
       id: 1,
       name: 'Entrada General',
@@ -72,9 +95,9 @@ export class Tickets {
       description: 'Pack familiar con descuento. Perfecto para llevar a los pequeños.',
       image: 'assets/img/ticket-familia.png',
     },
-  ];
+  ]);
 
-  filialTickets: Ticket[] = [
+  filialTickets = signal<Ticket[]>([
     {
       id: 5,
       name: 'Entrada General Filial',
@@ -93,9 +116,9 @@ export class Tickets {
       description: 'Abono para 10 partidos del filial. Disfruta del futuro del club.',
       image: 'assets/img/ticket-abono-filial.png',
     },
-  ];
+  ]);
 
-  activities: Activity[] = [
+  activities = signal<Activity[]>([
     {
       id: 1,
       name: 'Visita al Museo',
@@ -105,39 +128,42 @@ export class Tickets {
       description: 'Descubre la historia del IRONBRIDGE FC en nuestro museo. Incluye guía especializado.',
       image: 'assets/img/museo.png',
     },
-  ];
-
-  getVisibleTickets(): Ticket[] {
-    return this.selectedTeam() === 'primer-equipo'
-      ? this.primerEquipoTickets
-      : this.filialTickets;
-  }
+  ]);
 
   selectTeam(team: 'primer-equipo' | 'filial'): void {
     this.selectedTeam.set(team);
   }
 
-  toggleActivities(): void {
-    this.showActivities.set(!this.showActivities());
+  getTicketStatus(ticketId: number): 'high' | 'medium' | 'low' {
+    return this.ticketStatuses().get(ticketId) || 'high';
   }
 
-  getAvailabilityPercentage(ticket: Ticket | Activity): number {
-    return (ticket.available / ticket.capacity) * 100;
+  getActivityStatus(activityId: number): 'high' | 'medium' | 'low' {
+    return this.activityStatuses().get(activityId) || 'high';
   }
 
   getAvailabilityStatus(ticket: Ticket | Activity): 'high' | 'medium' | 'low' {
-    const percentage = this.getAvailabilityPercentage(ticket);
+    const percentage = (ticket.available / ticket.capacity) * 100;
     if (percentage > 50) return 'high';
     if (percentage > 20) return 'medium';
     return 'low';
   }
 
   buyTicket(ticket: Ticket | Activity): void {
-    if (ticket.available > 0) {
-      alert(`¡Entradas de "${ticket.name}" compradas! Precio: €${ticket.price}`);
-      ticket.available--;
-    } else {
+    if (ticket.available <= 0) {
       alert('Lo sentimos, esta entrada está agotada.');
+      return;
+    }
+
+    alert(`¡Entradas de "${ticket.name}" compradas! Precio: €${ticket.price}`);
+
+    const updateTickets = (tickets: Ticket[]) =>
+      tickets.map(t => t.id === ticket.id ? { ...t, available: t.available - 1 } : t);
+
+    if (this.selectedTeam() === 'primer-equipo') {
+      this.primerEquipoTickets.update(tickets => updateTickets(tickets));
+    } else {
+      this.filialTickets.update(tickets => updateTickets(tickets));
     }
   }
 }

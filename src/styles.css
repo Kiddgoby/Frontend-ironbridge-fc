@@ -99,6 +99,30 @@
   --transition-slowest: 1s ease;
 }
 
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+/* Optimize scrolling performance */
+html {
+  scroll-behavior: auto;
+  overflow-anchor: auto;
+}
+
+/* Enable GPU acceleration for heavy elements */
+body, main {
+  transform: translateZ(0);
+}
+
+/* Reduce repaints during scroll */
+* {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize layers */
+section {
+  contain: layout style paint;
+  will-change: auto;
+}
+
 /* ===== RESET & BASE STYLES ===== */
 * {
   margin: 0;
